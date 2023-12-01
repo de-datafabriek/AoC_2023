@@ -8,6 +8,7 @@ _ = await secondAttempt();
 
 async Task<int> secondAttempt()
 {
+    //this attempt will consider translation of overlapping text. eightwo will return as "82"
     List<int> nrs = new();
     var input = await File.ReadAllLinesAsync("./Day01/input.txt");
     foreach (var l in input)
@@ -35,7 +36,7 @@ async Task<int> secondAttempt()
 
 async Task<int> firstAttempt()
 {
-
+    //this attempt will not consider translation of overlapping text. eightwo will return as "8" only and not "82"
     var input = await File.ReadAllLinesAsync("./Day01/input.txt");
     var numbersInterpolated = input.Select(l =>
     {
