@@ -1,16 +1,15 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 List<string> NumbersInWriting = new() { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-
+string SOURCE_FILE = "./Day01/input2.txt";
 _ = await firstAttempt();
-_ = await secondAttempt();
+_ = await secondAttempt(false);
+_ = await secondAttempt(true);
 
-async Task<int> secondAttempt()
+async Task<int> secondAttempt(bool translateWords)
 {
     //this attempt will consider translation of overlapping text. eightwo will return as "82"
     List<int> nrs = new();
-    var input = await File.ReadAllLinesAsync("./Day01/input.txt");
+    var input = await File.ReadAllLinesAsync(SOURCE_FILE);
     foreach (var l in input)
     {
         string digits = "";
@@ -18,7 +17,7 @@ async Task<int> secondAttempt()
         {
             if (int.TryParse(l.Substring(i, 1), out int d))
                 digits += d;
-            else
+            if(translateWords)
             {
                 int ni = 0;
                 NumbersInWriting.ForEach(ns =>
@@ -37,7 +36,7 @@ async Task<int> secondAttempt()
 async Task<int> firstAttempt()
 {
     //this attempt will not consider translation of overlapping text. eightwo will return as "8" only and not "82"
-    var input = await File.ReadAllLinesAsync("./Day01/input.txt");
+    var input = await File.ReadAllLinesAsync(SOURCE_FILE);
     var numbersInterpolated = input.Select(l =>
     {
         while (true)
